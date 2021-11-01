@@ -24,11 +24,9 @@ const Table = (props) => (
 export default class Tables extends Component {
     constructor(props) {
       super(props);
-      // this.deleteRecord = this.deleteRecord.bind(this);
       this.state = { tables: [] };
     }
-  
-    // This method will get the data from the database.
+
     componentDidMount() {
       axios
         .get("http://localhost:5000/table/")
@@ -40,8 +38,7 @@ export default class Tables extends Component {
           console.log(error);
         });
     }
-  
-    // This method will delete a record based on the method
+
     deleteTable(id) {
       axios.delete("http://localhost:5000/table/" + id).then((response) => {
         console.log(response.data);
@@ -51,8 +48,7 @@ export default class Tables extends Component {
         tables: this.state.tables.filter((el) => el._id !== id),
       });
     }
-  
-    // This method will map out the users on the table
+
     tableList() {
       return this.state.tables.map((currenttable) => {
         return (
