@@ -5,6 +5,7 @@ export default class CreateTable extends Component {
   constructor(props) {
     super(props);
  
+    this.onChangeName = this.onChangeName.bind(this);
     this.onChangeParty = this.onChangeParty.bind(this);
     this.onChangeWaiter = this.onChangeWaiter.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
@@ -12,11 +13,18 @@ export default class CreateTable extends Component {
     this.onSubmit = this.onSubmit.bind(this);
  
     this.state = {
+      name: "",
       party_id: "",
       waiter_id: "",
       size: "",
       status: ""
     };
+  }
+
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value,
+    });
   }
  
   onChangeParty(e) {
@@ -47,6 +55,7 @@ export default class CreateTable extends Component {
     e.preventDefault();
 
     const new_table = {
+      name: this.state.name,
       party_id: this.state.party_id,
       waiter_id: this.state.waiter_id,
       size: parseInt(this.state.size),
@@ -58,6 +67,7 @@ export default class CreateTable extends Component {
       .then((res) => console.log(res.data));
 
     this.setState({
+      name: "",
       party_id: "",
       table_id: "",
       size: "",
@@ -70,6 +80,15 @@ export default class CreateTable extends Component {
       <div style={{ marginTop: 20 }}>
         <h3>Create New Table</h3>
         <form onSubmit={this.onSubmit}>
+        <div className="form-group">
+            <label>Table Name: </label>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.name}
+              onChange={this.onChangeName}
+            />
+          </div>
           <div className="form-group">
             <label>Party ID: </label>
             <input

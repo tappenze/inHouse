@@ -1,13 +1,13 @@
 const express = require("express");
 
-const tableRoutes = express.Router();
+const partyRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
-tableRoutes.route("/table").get(function (req, res) {
+partyRoutes.route("/party").get(function (req, res) {
     let db_connect = dbo.getDb();
     db_connect
-        .collection("tables")
+        .collection("parties")
         .find({})
         .toArray(function (err, result) {
             if (err) throw err;
@@ -15,48 +15,46 @@ tableRoutes.route("/table").get(function (req, res) {
         });
 });
 
-tableRoutes.route("/table/:id").get(function (req, res) {
+partyRoutes.route("/party/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect
-        .collection("tables")
+        .collection("parties")
         .findOne(myquery, function (err, result) {
             if (err) throw err;
             res.json(result);
         });
 });
 
-tableRoutes.route("/table").post(function (req, response) {
+partyRoutes.route("/party").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
         name: req.body.name,
-        party_id: req.body.party_id,
-        waiter_id: req.body.waiter_id,
+        phone: req.body.phone,
         size: req.body.size,
-        status: req.body.status
+        total: req.body.total
     };
     console.log("Entering document:")
     console.log(myobj)
-    db_connect.collection("tables").insertOne(myobj, function (err, res) {
+    db_connect.collection("parties").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
     });
 });
 
-tableRoutes.route("/table/update").post(function (req, response) {
+partyRoutes.route("/party/update").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
         $set: {
             name: req.body.name,
-            party_id: req.body.party_id,
-            waiter_id: req.body.waiter_id,
+            phone: req.body.phone,
             size: req.body.size,
-            status: req.body.status
+            total: req.body.total
         },
     };
     db_connect
-        .collection("tables")
+        .collection("parties")
         .updateOne(myquery, newvalues, function (err, res) {
             if (err) throw err;
             console.log("1 document updated");
@@ -64,14 +62,14 @@ tableRoutes.route("/table/update").post(function (req, response) {
         });
 });
 
-tableRoutes.route("/table/:id").delete((req, response) => {
+partyRoutes.route("/party/:id").delete((req, response) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
-    db_connect.collection("tables").deleteOne(myquery, function (err, obj) {
+    db_connect.collection("parties").deleteOne(myquery, function (err, obj) {
         if (err) throw err;
         console.log("1 document deleted");
         response.status(obj);
     });
 });
 
-module.exports = tableRoutes;
+module.exports = partyRoutes;
