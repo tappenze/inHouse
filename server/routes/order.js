@@ -17,12 +17,12 @@ tableRoutes.route("/menu").get(function (req, res) {
 });
 
 //gets a tables orders thusfar (need to delete after people pay)
-tableRoutes.route("/order/:id").get(function (req, res) {
+tableRoutes.route("/order").get(function (req, res) {
     let db_connect = dbo.getDb();
-    let myquery = { table_id: ObjectId(req.params.id) };
     db_connect
         .collection("orders")
-        .findOne(myquery, function (err, result) {
+        .find({})
+        .toArray(function (err, result) {
             if (err) throw err;
             res.json(result);
         });
@@ -62,15 +62,14 @@ tableRoutes.route("/order").post(function (req, response) {
 //         });
 // });
 
-//deletes an order
-// tableRoutes.route("/table/:id").delete((req, response) => {
-//     let db_connect = dbo.getDb();
-//     let myquery = { _id: ObjectId(req.params.id) };
-//     db_connect.collection("tables").deleteOne(myquery, function (err, obj) {
-//         if (err) throw err;
-//         console.log("1 document deleted");
-//         response.status(obj);
-//     });
-// });
+tableRoutes.route("/order/:id").delete((req, response) => {
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("orders").deleteOne(myquery, function (err, obj) {
+        if (err) throw err;
+        console.log("1 document deleted");
+        response.status(obj);
+    });
+});
 
 module.exports = tableRoutes;
