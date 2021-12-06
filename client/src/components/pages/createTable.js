@@ -52,6 +52,7 @@ export default class CreateTable extends Component {
       size: parseInt(this.state.size),
       status: this.state.status
     };
+    console.log(this.state.status)
  
     axios
       .post("http://localhost:5000/table", new_table)
