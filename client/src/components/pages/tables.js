@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const Table = (props) => (
     <tr>
-      <td>{props.table._id}</td>
+      <td>{props.table.name}</td>
       <td>{props.table.party_id}</td>
       <td>{props.table.waiter_id}</td>
       <td>{props.table.size}</td>
@@ -68,7 +68,7 @@ export default class Tables extends Component {
           <table className="table table-striped" style={{ marginTop: 20 }}>
             <thead>
               <tr>
-                <th>Table ID</th>
+                <th>Table Name</th>
                 <th>Party</th>
                 <th>Waiter</th>
                 <th>Size</th>

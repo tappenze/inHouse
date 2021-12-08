@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import axios from 'axios';
  
-export default class CreateTable extends Component {
+export default class CreateParty extends Component {
   constructor(props) {
     super(props);
  
     this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeParty = this.onChangeParty.bind(this);
-    this.onChangeWaiter = this.onChangeWaiter.bind(this);
+    this.onChangePhone = this.onChangePhone.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.onChangeType = this.onChangeType.bind(this);
+    this.onChangeTime = this.onChangeTime.bind(this);
  
     this.state = {
       name: "",
-      party_id: "",
-      waiter_id: "",
+      phone: "",
       size: "",
-      status: ""
+      type: "",
+      time: ""
     };
   }
 
@@ -27,15 +27,9 @@ export default class CreateTable extends Component {
     });
   }
  
-  onChangeParty(e) {
+  onChangePhone(e) {
     this.setState({
-      party_id: e.target.value,
-    });
-  }
- 
-  onChangeWaiter(e) {
-    this.setState({
-      waiter_id: e.target.value,
+      phone: e.target.value,
     });
   }
  
@@ -45,44 +39,50 @@ export default class CreateTable extends Component {
     });
   }
 
-  onChangeStatus(e) {
+  onChangeType(e) {
     this.setState({
-      status: e.target.value,
+      type: e.target.value,
+    });
+  }
+
+  onChangeTime(e) {
+    this.setState({
+      time: e.target.value,
     });
   }
 
   onSubmit(e) {
     e.preventDefault();
 
-    const new_table = {
+    const new_party = {
       name: this.state.name,
-      party_id: this.state.party_id,
-      waiter_id: this.state.waiter_id,
+      phone: this.state.phone,
       size: parseInt(this.state.size),
-      status: this.state.status
+      total: 0,
+      type: this.state.type,
+      time: new Date(parseInt(this.state.time)),
     };
-    console.log(this.state.status)
  
     axios
-      .post("http://localhost:5000/table", new_table)
+      .post("http://localhost:5000/party", new_party)
       .then((res) => console.log(res.data));
 
     this.setState({
       name: "",
-      party_id: "",
-      table_id: "",
+      phone: "",
       size: "",
-      status: ""
+      type: "",
+      time: ""
     });
   }
 
   render() {
     return (
       <div style={{ marginTop: 20 }}>
-        <h3>Create New Table</h3>
+        <h3>Create New Party</h3>
         <form onSubmit={this.onSubmit}>
         <div className="form-group">
-            <label>Table Name: </label>
+            <label>Name: </label>
             <input
               type="text"
               className="form-control"
@@ -91,21 +91,12 @@ export default class CreateTable extends Component {
             />
           </div>
           <div className="form-group">
-            <label>Party ID: </label>
+            <label>Phone Number: </label>
             <input
               type="text"
               className="form-control"
-              value={this.state.party_id}
-              onChange={this.onChangeParty}
-            />
-          </div>
-          <div className="form-group">
-            <label>Waiter ID: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.waiter_id}
-              onChange={this.onChangeWaiter}
+              value={this.state.phone}
+              onChange={this.onChangePhone}
             />
           </div>
           <div className="form-group">
@@ -124,11 +115,11 @@ export default class CreateTable extends Component {
                 type="radio"
                 name="priorityOptions"
                 id="priorityLow"
-                value="Open"
-                checked={this.state.status === "Open"}
-                onChange={this.onChangeStatus}
+                value="Reservation"
+                checked={this.state.type === "Reservation"}
+                onChange={this.onChangeType}
               />
-              <label className="form-check-label">Open</label>
+              <label className="form-check-label">Reservation</label>
             </div>
             <div className="form-check form-check-inline">
               <input
@@ -136,17 +127,28 @@ export default class CreateTable extends Component {
                 type="radio"
                 name="priorityOptions"
                 id="priorityMedium"
-                value="Occupied"
-                checked={this.state.status === "Occupied"}
-                onChange={this.onChangeStatus}
+                value="Walkin"
+                checked={this.state.type === "Walkin"}
+                onChange={this.onChangeType}
               />
-              <label className="form-check-label">Occupied</label>
+              <label className="form-check-label">Walkin</label>
             </div>
           </div>
+          {this.state.type === "Reservation" ? (
+            <div className="form-group">
+              <label>Time (milliseconds): </label>
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.time}
+                onChange={this.onChangeTime}
+              />
+            </div>
+          ) : (<div></div>)}
           <div className="form-group">
             <input
               type="submit"
-              value="Create table"
+              value="Create party"
               className="btn btn-primary"
             />
           </div>

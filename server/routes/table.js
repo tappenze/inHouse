@@ -40,11 +40,14 @@ tableRoutes.route("/table/:id").get(function (req, res) {
 tableRoutes.route("/table").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
+        name: req.body.name,
         party_id: req.body.party_id,
         waiter_id: req.body.waiter_id,
         size: req.body.size,
         status: req.body.status
     };
+    console.log("Entering document:")
+    console.log(myobj)
     db_connect.collection("tables").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
@@ -56,6 +59,7 @@ tableRoutes.route("/table/update").post(function (req, response) {
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
         $set: {
+            name: req.body.name,
             party_id: req.body.party_id,
             waiter_id: req.body.waiter_id,
             size: req.body.size,
