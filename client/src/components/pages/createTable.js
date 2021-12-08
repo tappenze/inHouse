@@ -137,7 +137,7 @@ export default class CreateTable extends Component {
                 name="priorityOptions"
                 id="priorityMedium"
                 value="Occupied"
-                checked={this.state.person_level === "Occupied"}
+                checked={this.state.status === "Occupied"}
                 onChange={this.onChangeStatus}
               />
               <label className="form-check-label">Occupied</label>

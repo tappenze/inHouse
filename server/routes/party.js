@@ -32,14 +32,34 @@ partyRoutes.route("/party").post(function (req, response) {
         name: req.body.name,
         phone: req.body.phone,
         size: req.body.size,
-        total: req.body.total
+        total: req.body.total,
     };
     console.log("Entering document:")
     console.log(myobj)
     db_connect.collection("parties").insertOne(myobj, function (err, res) {
         if (err) throw err;
-        response.json(res);
-    });
+
+        if (req.body.type === "Reservation") {
+            let resobj = {
+                party_id: myobj._id,
+                time: req.body.time
+            }
+            console.log("Entering reservation:")
+            console.log(resobj)
+            db_connect.collection("reservations").insertOne(resobj, function (err, res) {
+                if (err) throw err;
+                response.json(res);
+            })
+        } else {
+            let wiobj = {
+                party_id: myobj._id
+            }
+            db_connect.collection("walkins").insertOne(wiobj, function (err, res) {
+                if (err) throw err;
+                response.json(res);
+            })
+        }
+    })
 });
 
 partyRoutes.route("/party/update").post(function (req, response) {
