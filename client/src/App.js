@@ -7,6 +7,7 @@ import CreateTable from "./components/pages/createTable";
 import Parties from "./components/pages/parties";
 import CreateParty from "./components/pages/createParty";
 import Home from "./components/pages/home";
+import CreateOrder from "./components/pages/createOrder";
 
 const App = () => {
   return (
@@ -18,14 +19,17 @@ const App = () => {
       <Route exact path="/tables">
         <Tables />
       </Route>
-      <Route path="/createTables">
+      <Route exact path="/createTables">
         <CreateTable />
       </Route>
       <Route exact path="/parties">
         <Parties />
       </Route>
-      <Route path="/createParties">
+      <Route exact path="/createParties">
         <CreateParty />
+      </Route>
+      <Route path="/order">
+        <CreateOrder />
       </Route>
     </div>
   );

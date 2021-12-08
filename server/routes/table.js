@@ -15,6 +15,17 @@ tableRoutes.route("/table").get(function (req, res) {
         });
 });
 
+tableRoutes.route("/table/occupied").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    db_connect
+        .collection("tables")
+        .find({ status: "Occupied"})
+        .toArray(function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 tableRoutes.route("/table/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };

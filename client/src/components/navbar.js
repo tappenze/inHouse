@@ -43,6 +43,11 @@ const Navbar = () => {
                 Add Party
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/order">
+                Add Order
+              </NavLink>
+            </li>
           </ul>
         </div>
       </nav>

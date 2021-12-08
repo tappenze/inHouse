@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 app.use(require("./routes/table"));
 app.use(require("./routes/party"));
+app.use(require("./routes/order"));
 const dbo = require("./db/conn");
  
 app.listen(port, () => {
