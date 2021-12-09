@@ -58,3 +58,5 @@ waiterRoutes.route("/waiter").post(function(req, resp) {
         response.json(res);
     });
 });
+
+module.exports = waiterRoutes;
