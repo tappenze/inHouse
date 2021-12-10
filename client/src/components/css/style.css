@@ -3,24 +3,30 @@ html,body{
     font-family: 'Readex Pro', sans-serif;
 }
 
-h1 {
+h1, h2 {
     color: #7C5323;
-}
-
-div {
-    text-align: center;
 }
 
 .navbar-brand {
     margin-left: 20px;
 }
 
-Button {
+Button, .btn-primary {
     border-color: #4E7701 !important;
     background-color: #4E7701 !important;
+    margin: 20px;
 }
 
 Button:hover {
     border-color: #3a5800 !important;
     background-color: #3a5800 !important;
+}
+
+.trash {
+    width: 3%;
+    text-align: center;
+}
+
+.logo {
+    margin: 20px;
 }

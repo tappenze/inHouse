@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import trash from './delete.png';
+import inhouse from './InHouse.png';
 
 const Menu = (props) => (
     <tr>
@@ -13,7 +16,7 @@ const Menu = (props) => (
             props.deleteMenu(props.menu._id);
           }}
         >
-          Delete
+          <img className="trash" alt="Delete" src={trash}></img>
         </a>
       </td>
     </tr>
@@ -61,18 +64,29 @@ export default class Menus extends Component {
 
     render() {
       return (
-        <div>
-          <h3>Menu</h3>
-          <table className="table table-striped" style={{ marginTop: 20 }}>
-            <thead>
-              <tr>
-                <th>Menu Item</th>
-                <th>Name</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>{this.menuList()}</tbody>
-          </table>
+        <div style={{ marginTop: 20 }}>
+          <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+            <br></br>
+            <br></br>
+            <div style={{textAlign: "center"}}>
+              <h2>Menu</h2>
+              <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                  <tr>
+                    <th>Menu Item</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                  </tr>
+                </thead>
+                <tbody>{this.menuList()}</tbody>
+              </table>
+              <br></br>
+              <a href="/createMenu">
+                <Button variant="primary" size="lg">
+                    Add Menu Item
+                </Button>
+              </a>
+            </div>
         </div>
       );
     }

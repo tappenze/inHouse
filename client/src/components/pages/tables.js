@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import trash from './delete.png';
+import inhouse from './InHouse.png';
 
 const Table = (props) => (
     <tr>
@@ -15,7 +18,7 @@ const Table = (props) => (
             props.deleteTable(props.table._id);
           }}
         >
-          Delete
+          <img className="trash" alt="Delete" src={trash}></img>
         </a>
       </td>
     </tr>
@@ -63,20 +66,31 @@ export default class Tables extends Component {
 
     render() {
       return (
-        <div>
-          <h3>Tables</h3>
-          <table className="table table-striped" style={{ marginTop: 20 }}>
-            <thead>
-              <tr>
-                <th>Table Name</th>
-                <th>Party</th>
-                <th>Waiter</th>
-                <th>Size</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>{this.tableList()}</tbody>
-          </table>
+        <div style={{ marginTop: 20 }}>
+          <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+            <br></br>
+            <br></br>
+            <div style={{textAlign: "center"}}>
+              <h2>Tables</h2>
+              <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                  <tr>
+                    <th>Table Name</th>
+                    <th>Party</th>
+                    <th>Waiter</th>
+                    <th>Size</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>{this.tableList()}</tbody>
+              </table>
+              <br></br>
+              <a href="/createTables">
+                <Button variant="primary" size="lg">
+                    Add Table
+                </Button>
+              </a>
+            </div>
         </div>
       );
     }
