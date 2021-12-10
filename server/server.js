@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(require("./routes/table"));
 app.use(require("./routes/party"));
 app.use(require("./routes/order"));
+app.use(require("./routes/menu"));
 app.use(require("./routes/waiter"));
 const dbo = require("./db/conn");
  
