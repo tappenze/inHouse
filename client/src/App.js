@@ -10,6 +10,8 @@ import Home from "./components/pages/home";
 import CreateOrder from "./components/pages/createOrder";
 import Menu from "./components/pages/menus";
 import CreateMenu from "./components/pages/createMenu"
+import Waiters from "./components/pages/waiters";
+import CreateWaiter from "./components/pages/createWaiter";
 
 const App = () => {
   return (
@@ -39,6 +41,12 @@ const App = () => {
       <Route exact path="/createMenu">
         <CreateMenu />
       </Route>
+      <Route exact path="/waiters">
+        <Waiters />
+      </Route>  
+      <Route exact path="/createWaiter">
+        <CreateWaiter />
+      </Route>      
     </div>
   );
 };

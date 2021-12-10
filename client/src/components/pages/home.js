@@ -42,9 +42,9 @@ export default class Home extends Component {
                     <br></br>
                     <Row>
                         <Col>
-                            <Button variant="primary" size="lg">
+                            <a href="/waiters"><Button variant="primary" size="lg">
                                 Waiters
-                            </Button>
+                            </Button></a>
                         </Col>
                         <Col>
                             <a href="/order"><Button variant="primary" size="lg">
