@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import inhouse from './InHouse.png';
  
 export default class CreateParty extends Component {
   constructor(props) {
@@ -79,80 +80,89 @@ export default class CreateParty extends Component {
   render() {
     return (
       <div style={{ marginTop: 20 }}>
-        <h3>Create New Party</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-            <label>Name: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone Number: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.phone}
-              onChange={this.onChangePhone}
-            />
-          </div>
-          <div className="form-group">
-            <label>Size: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.size}
-              onChange={this.onChangeSize}
-            />
-          </div>
-          <div className="form-group">
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="priorityOptions"
-                id="priorityLow"
-                value="Reservation"
-                checked={this.state.type === "Reservation"}
-                onChange={this.onChangeType}
-              />
-              <label className="form-check-label">Reservation</label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="priorityOptions"
-                id="priorityMedium"
-                value="Walkin"
-                checked={this.state.type === "Walkin"}
-                onChange={this.onChangeType}
-              />
-              <label className="form-check-label">Walkin</label>
-            </div>
-          </div>
-          {this.state.type === "Reservation" ? (
+        <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+        <br></br>
+        <br></br>
+        <div style={{textAlign: "center"}}>
+          <h2>Create New Party</h2>
+          <br></br>
+          <div style={{display: "inline-block", textAlign: "left"}}>
+            <form onSubmit={this.onSubmit}>
             <div className="form-group">
-              <label>Time (milliseconds): </label>
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.time}
-                onChange={this.onChangeTime}
-              />
-            </div>
-          ) : (<div></div>)}
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Create party"
-              className="btn btn-primary"
-            />
+                <label>Name: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.name}
+                  onChange={this.onChangeName}
+                />
+              </div>
+              <div className="form-group">
+                <label>Phone Number: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.phone}
+                  onChange={this.onChangePhone}
+                />
+              </div>
+              <div className="form-group">
+                <label>Size: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.size}
+                  onChange={this.onChangeSize}
+                />
+              </div>
+              <div className="form-group">
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="priorityOptions"
+                    id="priorityLow"
+                    value="Reservation"
+                    checked={this.state.type === "Reservation"}
+                    onChange={this.onChangeType}
+                  />
+                  <label className="form-check-label">Reservation</label>
+                </div>
+                <div className="form-check form-check-inline">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="priorityOptions"
+                    id="priorityMedium"
+                    value="Walkin"
+                    checked={this.state.type === "Walkin"}
+                    onChange={this.onChangeType}
+                  />
+                  <label className="form-check-label">Walkin</label>
+                </div>
+              </div>
+              {this.state.type === "Reservation" ? (
+                <div className="form-group">
+                  <label>Time (milliseconds): </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={this.state.time}
+                    onChange={this.onChangeTime}
+                  />
+                </div>
+              ) : (<div></div>)}
+              <br></br>
+              <div className="form-group">
+                <input
+                  type="submit"
+                  value="Create party"
+                  className="btn btn-primary"
+                />
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </div>
     );
   }

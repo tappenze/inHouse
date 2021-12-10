@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import inhouse from './InHouse.png';
  
 // for a given party, they should be able to place an order for foods from among the listed menu
 
@@ -109,26 +110,34 @@ export default class CreateOrder extends Component {
 
     return (
       <div style={{ marginTop: 20 }}>
-        <h3>Create New Table</h3>
-        <form onSubmit={this.onSubmit}>
-          <div className="form-group">
-            <label>Select an occupied table:</label>
-            <select onChange={this.onChangeTable}> 
-              {tablesList}
-            </select>
-          </div>
-          <div className="App">
-            Select your menu items:
-            {menuitems}
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Submit order"
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
+        <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+        <br></br>
+        <br></br>
+        <div style={{textAlign: "center"}}>
+          <h2>Create New Order</h2>
+          <br></br>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+              <label>Select an occupied table: </label>
+              <select onChange={this.onChangeTable}> 
+                {tablesList}
+              </select>
+            </div>
+            <div className="App" style={{display: "inline-block", textAlign: "left"}}>
+              Select your menu items:
+              {menuitems}
+            </div>
+            <br></br>
+            <br></br>
+            <div className="form-group">
+              <input
+                type="submit"
+                value="Submit order"
+                className="btn btn-primary"
+              />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

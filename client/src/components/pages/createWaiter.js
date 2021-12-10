@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import inhouse from './InHouse.png';
  
 export default class CreateWaiter extends Component {
   constructor(props) {
@@ -50,34 +51,43 @@ export default class CreateWaiter extends Component {
   render() {
     return (
       <div style={{ marginTop: 20 }}>
-        <h3>Create New Waiter</h3>
-        <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-            <label>Name: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.name}
-              onChange={this.onChangeName}
-            />
+        <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+        <br></br>
+        <br></br>
+        <div style={{textAlign: "center"}}>
+          <h2>Create New Waiter</h2>
+          <br></br>
+          <div style={{display: "inline-block", textAlign: "left"}}>
+            <form onSubmit={this.onSubmit}>
+            <div className="form-group">
+                <label>Name: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.name}
+                  onChange={this.onChangeName}
+                />
+              </div>
+              <div className="form-group">
+                <label>Tips: </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={this.state.tips}
+                  onChange={this.onChangeTips}
+                />
+              </div>
+              <br></br>
+              <div className="form-group">
+                <input
+                  type="submit"
+                  value="Create waiter"
+                  className="btn btn-primary"
+                />
+              </div>
+            </form>
           </div>
-          <div className="form-group">
-            <label>Tips: </label>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.tips}
-              onChange={this.onChangeTips}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="submit"
-              value="Create waiter"
-              className="btn btn-primary"
-            />
-          </div>
-        </form>
+        </div>
       </div>
     );
   }

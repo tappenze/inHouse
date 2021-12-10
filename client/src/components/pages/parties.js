@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import trash from './delete.png';
+import inhouse from './InHouse.png';
 
 const Party = (props) => (
     <tr>
@@ -15,7 +18,7 @@ const Party = (props) => (
             props.deleteParty(props.party._id);
           }}
         >
-          Delete
+          <img className="trash" alt="Delete" src={trash}></img>
         </a>
       </td>
     </tr>
@@ -63,20 +66,31 @@ export default class Parties extends Component {
 
     render() {
       return (
-        <div>
-          <h3>Parties</h3>
-          <table className="table table-striped" style={{ marginTop: 20 }}>
-            <thead>
-              <tr>
-                <th>Party ID</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Size</th>
-                <th>Total</th>
-              </tr>
-            </thead>
-            <tbody>{this.partyList()}</tbody>
-          </table>
+        <div style={{ marginTop: 20 }}>
+          <a href="/"><img className="logo" alt="" src={inhouse}></img></a>
+            <br></br>
+            <br></br>
+            <div style={{textAlign: "center"}}>
+              <h2>Parties</h2>
+              <table className="table table-striped" style={{ marginTop: 20 }}>
+                <thead>
+                  <tr>
+                    <th>Party ID</th>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Size</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>{this.partyList()}</tbody>
+              </table>
+              <br></br>
+              <a href="/createParties">
+                <Button variant="primary" size="lg">
+                    Add Party
+                </Button>
+              </a>
+            </div>
         </div>
       );
     }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.css";
 
-import Navbar from "./components/navbar";
+// import Navbar from "./components/navbar";
 import Tables from "./components/pages/tables";
 import CreateTable from "./components/pages/createTable";
 import Parties from "./components/pages/parties";
@@ -16,7 +17,7 @@ import CreateWaiter from "./components/pages/createWaiter";
 const App = () => {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Route exact path="/">
         <Home />
       </Route>
