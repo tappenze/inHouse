@@ -23,6 +23,7 @@ waiterRoutes.route("/waiters").post(function (req, response) {
         name: req.body.name,
         tips: req.body.tips,
     };
+    console.log("succesffuly added waiter");
     db_connect.collection("waiters").insertOne(myobj, function (err, res) {
         if (err) throw err;
         response.json(res);
@@ -36,7 +37,8 @@ waiterRoutes.route("/waiters/:id").delete((req, res) => {
     db_connect.collection("waiters").deleteOne(myquery, function (err, obj) {
         if (err) throw err;
         console.log("waiter fired");
-        response.status(obj);
+        res.status(obj);
+    console.log("successfully deleted waiter")
     });
 });
 
