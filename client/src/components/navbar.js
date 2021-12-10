@@ -48,6 +48,16 @@ const Navbar = () => {
                 Add Order
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/menu">
+                Menu
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/createMenu">
+                Add Menu Item
+              </NavLink>
+            </li>
           </ul>
         </div>
       </nav>

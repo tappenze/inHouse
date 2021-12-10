@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Readex+Pro&display=swap');
+html,body{
+    font-family: 'Readex Pro', sans-serif;
+}
+
+h1 {
+    color: #7C5323;
+}
+
+div {
+    text-align: center;
+}
+
+Button {
+    border-color: #4E7701 !important;
+    background-color: #4E7701 !important;
+}
+
+Button:hover {
+    border-color: #3a5800 !important;
+    background-color: #3a5800 !important;
+}
