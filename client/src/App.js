@@ -8,6 +8,8 @@ import Parties from "./components/pages/parties";
 import CreateParty from "./components/pages/createParty";
 import Home from "./components/pages/home";
 import CreateOrder from "./components/pages/createOrder";
+import Waiters from "./components/pages/waiters";
+import CreateWaiter from "./components/pages/createWaiter";
 
 const App = () => {
   return (
@@ -31,6 +33,12 @@ const App = () => {
       <Route path="/order">
         <CreateOrder />
       </Route>
+      <Route exact path="/waiters">
+        <Waiters />
+      </Route>  
+      <Route exact path="/createWaiter">
+        <CreateWaiter />
+      </Route>      
     </div>
   );
 };
