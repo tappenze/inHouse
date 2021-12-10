@@ -17,12 +17,11 @@ waiterRoutes.route("/waiters").get(function (req, res) {
 });
 
 //create new waiter
-waiterRoutes.route("/waiter").post(function (req, response) {
+waiterRoutes.route("/waiters").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
         name: req.body.name,
-        tables: req.body.tables,
-        tips: 0.0,
+        tips: req.body.tips,
     };
     db_connect.collection("waiters").insertOne(myobj, function (err, res) {
         if (err) throw err;
@@ -31,7 +30,7 @@ waiterRoutes.route("/waiter").post(function (req, response) {
 });
 
 //delete waiter
-waiterRoutes.route("/waiter/:id").delete((req, res) => {
+waiterRoutes.route("/waiters/:id").delete((req, res) => {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id)};
     db_connect.collection("waiters").deleteOne(myquery, function (err, obj) {
@@ -42,13 +41,12 @@ waiterRoutes.route("/waiter/:id").delete((req, res) => {
 });
 
 //update waiter's info (tips + arrays)
-waiterRoutes.route("/waiter").post(function(req, resp) {
+waiterRoutes.route("/waiters").post(function(req, resp) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id)};
     let newvalues = {
         $set: {
-            name: req.body.size,
-            tables: req.body.tables,
+            name: req.body.name,
             tips: 0.0,
         },
     };

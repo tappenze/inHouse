@@ -49,12 +49,12 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/tables">
+              <NavLink className="nav-link" to="/waiters">
                 Waiters
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/order">
+              <NavLink className="nav-link" to="/createWaiter">
                 Add Waiter
               </NavLink>
             </li>                     
