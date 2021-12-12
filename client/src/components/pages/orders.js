@@ -37,10 +37,6 @@ export default class Orders extends Component {
         menu = response.data
         axios.get("http://localhost:5000/table/").then((response) => {
           tables = response.data
-          console.log("menu:")
-          console.log(menu)
-          console.log("tables:")
-          console.log(tables)
           axios
         .get("http://localhost:5000/order/")
         .then((response) => {
@@ -120,7 +116,7 @@ export default class Orders extends Component {
         return (
           <Order
             order={currentorder}
-            deleteTable={this.deleteOrder}
+            deleteOrder={this.deleteOrder}
             key={currentorder._id}
           />
         );
