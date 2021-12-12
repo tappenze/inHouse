@@ -19,7 +19,18 @@ export default class Tables extends Component {
             .get("http://localhost:5000/party")
             .then((response2) => {
               console.log(response2.data);
-              this.setState({ tables: response.data, parties: response2.data });
+
+              axios
+                .get("http://localhost:5000/waiters")
+                .then((response3) => {
+                  console.log(response3.data);
+
+                  let waiterDict = {};
+                  for (let i = 0; i < response3.data.length; i++) {
+                    waiterDict[response3.data[i]._id] = response3.data[i].name;
+                  }
+                  this.setState({ tables: response.data, parties: response2.data, waiters: waiterDict });
+                })
             })
             .catch(function (error) {
               console.log(error);
@@ -104,7 +115,7 @@ export default class Tables extends Component {
                 </select>
               ) : this.getParty(currenttable.party_id)}
             </td>
-            <td>{currenttable.waiter_id}</td>
+            <td>{this.state.waiters[currenttable.waiter_id]}</td>
             <td>{currenttable.size}</td>
             <td>{currenttable.status}</td>
             <td>
