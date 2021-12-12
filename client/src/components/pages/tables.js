@@ -13,7 +13,7 @@ const Table = (props) => (
       <td>{props.table.status}</td>
       <td>
         <a
-          href="/"
+          href="/tables"
           onClick={() => {
             props.deleteTable(props.table._id);
           }}

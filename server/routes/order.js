@@ -1,11 +1,11 @@
 const express = require("express");
 
-const tableRoutes = express.Router();
+const orderRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
 //gets all menu items
-tableRoutes.route("/menu").get(function (req, res) {
+orderRoutes.route("/menu").get(function (req, res) {
     let db_connect = dbo.getDb();
     db_connect
         .collection("menu")
@@ -16,8 +16,20 @@ tableRoutes.route("/menu").get(function (req, res) {
         });
 });
 
+// gets all orders
+orderRoutes.route("/order").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    db_connect
+        .collection("orders")
+        .find({})
+        .toArray(function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 //gets a tables orders thusfar (need to delete after people pay)
-tableRoutes.route("/order/:id").get(function (req, res) {
+orderRoutes.route("/order/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { table_id: ObjectId(req.params.id) };
     db_connect
@@ -29,7 +41,7 @@ tableRoutes.route("/order/:id").get(function (req, res) {
 });
 
 //places an order of items for a given table
-tableRoutes.route("/order").post(function (req, response) {
+orderRoutes.route("/order").post(function (req, response) {
     let db_connect = dbo.getDb();
     let myobj = {
         table_id: req.body.table_id,
@@ -63,14 +75,15 @@ tableRoutes.route("/order").post(function (req, response) {
 // });
 
 //deletes an order
-// tableRoutes.route("/table/:id").delete((req, response) => {
-//     let db_connect = dbo.getDb();
-//     let myquery = { _id: ObjectId(req.params.id) };
-//     db_connect.collection("tables").deleteOne(myquery, function (err, obj) {
-//         if (err) throw err;
-//         console.log("1 document deleted");
-//         response.status(obj);
-//     });
-// });
+orderRoutes.route("/order/:id").delete((req, response) => {
+    console.log("called order delete")
+    let db_connect = dbo.getDb();
+    let myquery = { _id: ObjectId(req.params.id) };
+    db_connect.collection("orders").deleteOne(myquery, function (err, obj) {
+        if (err) throw err;
+        console.log("1 document deleted");
+        response.status(obj);
+    });
+});
 
-module.exports = tableRoutes;
+module.exports = orderRoutes;

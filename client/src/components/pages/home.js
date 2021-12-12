@@ -51,7 +51,7 @@ export default class Home extends Component {
                                 </Button></a>
                             </Col>
                             <Col>
-                                <a href="/order"><Button variant="primary" size="lg">
+                                <a href="/orders"><Button variant="primary" size="lg">
                                     Order
                                 </Button></a>
                             </Col>
