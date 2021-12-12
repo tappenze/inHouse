@@ -7,10 +7,8 @@ import inhouse from './InHouse.png';
 const Order = (props) => (
     <tr>
       <td>{props.order._id}</td>
-      {/* <td>{props.order.table_name}</td> */}
-      <td>{props.order.table_id}</td>
-      {/* <td>{props.order.item_names.map((item, i) => { */}
-      <td>{props.order.items.map((item, i) => {
+      <td>{props.order.table_name}</td>
+      <td>{props.order.item_names.map((item, i) => {
           return <tr key={i} value={item}>{item}</tr>
       })}</td>
       <td>
@@ -33,26 +31,47 @@ export default class Orders extends Component {
     }
 
     componentDidMount() {
-      axios
+      let menu = [];
+      let tables = [];
+      axios.get("http://localhost:5000/menu/").then((response) => {
+        menu = response.data
+        axios.get("http://localhost:5000/table/").then((response) => {
+          tables = response.data
+          console.log("menu:")
+          console.log(menu)
+          console.log("tables:")
+          console.log(tables)
+          axios
         .get("http://localhost:5000/order/")
         .then((response) => {
           console.log(response.data);
           let temporders = response.data;
           console.log("before")
           console.log(temporders)
-          temporders.map(temporder=> ({ ...temporder, item_names: [] }))
+          temporders.map(temporder=> ({ ...temporder, table_name: "", item_names: [] }))
           for (let i = 0; i < temporders.length; i++) {
-            axios.get("http://localhost:5000/table/" + temporders[i].table_id).then((response) => {
-              temporders[i].table_name = response.data.name
-            });
-        
-            let tempitems = []
-            for (let j = 0; j < temporders[i].items.length; j++) {
-              axios.get("http://localhost:5000/menu/" + temporders[i].items[j]).then((response) => {
-                tempitems.push(response.data.name)
-              });
+            for (let j = 0; j < tables.length; j++) {
+              if (tables[j]._id == temporders[i].table_id) {
+                temporders[i].table_name = tables[j].name
+                break
+              }
             }
-            temporders[i].item_names = tempitems;
+          }
+          for (let i = 0; i < temporders.length; i++) {
+            for (let j = 0; j < temporders[i].items.length; j++) {
+              for (let k = 0; k < menu.length; k++) {
+                if (temporders[i].items[j] == menu[k]._id) {
+                  console.log(menu[k].name)
+                  console.log(temporders[i])
+                  // temporders[i].item_names.push(menu[k].name)
+                  if (temporders[i].item_names == undefined) {
+                    temporders[i].item_names = [menu[k].name]
+                  } else {
+                    temporders[i].item_names.push(menu[k].name)
+                  }
+                }
+              }
+            }
           }
           console.log("after:")
           console.log(temporders)
@@ -61,6 +80,10 @@ export default class Orders extends Component {
         .catch(function (error) {
           console.log(error);
         });
+        });
+      });
+      
+      
 
     }
 
@@ -116,7 +139,7 @@ export default class Orders extends Component {
                 <thead>
                   <tr>
                     <th>Order ID</th>
-                    <th>Table ID</th>
+                    <th>Table Name</th>
                     <th>Items</th>
                   </tr>
                 </thead>
