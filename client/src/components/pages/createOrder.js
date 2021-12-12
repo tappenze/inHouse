@@ -95,7 +95,7 @@ export default class CreateOrder extends Component {
     let tablesList = tables.length > 0
     	&& tables.map((item, i) => {
       return (
-        <option key={i} value={item._id}>{item.size}</option>
+        <option key={i} value={item._id}>{item.name}</option>
       )
     }, this);
 
