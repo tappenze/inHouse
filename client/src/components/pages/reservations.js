@@ -4,7 +4,7 @@ import inhouse from './InHouse.png';
 
 const Reservation = (props) => (
     <tr>
-      <td>{props.reservation.party_id}</td>
+      <td>{props.reservation.name} ({props.reservation.phone})</td>
       <td>{props.reservation.time}</td>
     </tr>
   );
@@ -19,8 +19,31 @@ export default class Reservations extends Component {
       axios
         .get("http://localhost:5000/reservations/")
         .then((response) => {
-          console.log(response.data);
-          this.setState({ reservations: response.data });
+          axios.get("http://localhost:5000/party/")
+            .then((response2) => {
+                
+                let reservations = response.data.map((r) => {
+                    let name = "";
+                    let phone = "";
+                    for (const r2 of response2.data) {
+                        if (r2._id == r.party_id) {
+                            name = r2.name;
+                            phone = r2.phone;
+                        }
+                    }
+                    return {
+                        _id: r._id,
+                        party_id: r.party_id,
+                        time: r.time,
+                        name: name,
+                        phone: phone
+                    }
+                })
+                console.log(response.data)
+                console.log(response2.data)
+                console.log(reservations)
+                this.setState({ reservations: reservations });
+            })
         })
         .catch(function (error) {
           console.log(error);
@@ -49,7 +72,7 @@ export default class Reservations extends Component {
               <table className="table table-striped" style={{ marginTop: 20 }}>
                 <thead>
                   <tr>
-                    <th>Party ID</th>
+                    <th>Party</th>
                     <th>Time</th>
                   </tr>
                 </thead>

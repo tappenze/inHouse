@@ -110,6 +110,10 @@ partyRoutes.route("/party/:id").delete((req, response) => {
     db_connect.collection("parties").deleteOne(myquery, function (err, obj) {
         if (err) throw err;
         console.log("1 document deleted");
+
+        let secondquery = { party_id: myquery._id };
+        db_connect.collection("reservations").deleteOne(secondquery)
+        db_connect.collection("walkins").deleteOne(secondquery)
         response.status(obj);
     });
 });
