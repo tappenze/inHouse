@@ -54,9 +54,11 @@ tableRoutes.route("/table").post(function (req, response) {
     });
 });
 
-tableRoutes.route("/table/update").post(function (req, response) {
+tableRoutes.route("/table/update").put(function (req, response) {
     let db_connect = dbo.getDb();
-    let myquery = { _id: ObjectId(req.params.id) };
+    let myquery = { _id: ObjectId(req.body._id) };
+
+    console.log(req.body)
     let newvalues = {
         $set: {
             name: req.body.name,

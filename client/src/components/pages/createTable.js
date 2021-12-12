@@ -7,7 +7,6 @@ export default class CreateTable extends Component {
     super(props);
  
     this.onChangeName = this.onChangeName.bind(this);
-    this.onChangeParty = this.onChangeParty.bind(this);
     this.onChangeWaiter = this.onChangeWaiter.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
     this.onChangeStatus = this.onChangeStatus.bind(this);
@@ -15,11 +14,19 @@ export default class CreateTable extends Component {
  
     this.state = {
       name: "",
-      party_id: "",
       waiter_id: "",
       size: "",
-      status: ""
+      status: "",
+      waiters: []
     };
+  }
+
+  componentWillMount() {
+    axios
+      .get("http://localhost:5000/waiters/")
+      .then((res) => {
+        this.setState({ waiters: res.data })
+      })
   }
 
   onChangeName(e) {
@@ -28,15 +35,9 @@ export default class CreateTable extends Component {
     });
   }
  
-  onChangeParty(e) {
+  onChangeWaiter(value) {
     this.setState({
-      party_id: e.target.value,
-    });
-  }
- 
-  onChangeWaiter(e) {
-    this.setState({
-      waiter_id: e.target.value,
+      waiter_id: value,
     });
   }
  
@@ -57,7 +58,6 @@ export default class CreateTable extends Component {
 
     const new_table = {
       name: this.state.name,
-      party_id: this.state.party_id,
       waiter_id: this.state.waiter_id,
       size: parseInt(this.state.size),
       status: this.state.status
@@ -98,22 +98,12 @@ export default class CreateTable extends Component {
                 />
               </div>
               <div className="form-group">
-                <label>Party ID: </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.party_id}
-                  onChange={this.onChangeParty}
-                />
-              </div>
-              <div className="form-group">
-                <label>Waiter ID: </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={this.state.waiter_id}
-                  onChange={this.onChangeWaiter}
-                />
+                <label>Waiter: </label>
+                <select className="form-control" onChange={({ target: { value } }) => this.onChangeWaiter(value)}>
+                  {this.state.waiters.map((waiter) => (
+                    <option value={waiter._id}>{waiter.name}</option>
+                  ))}
+                </select>
               </div>
               <div className="form-group">
                 <label>Size: </label>

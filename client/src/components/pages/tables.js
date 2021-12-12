@@ -4,42 +4,32 @@ import { Button } from 'react-bootstrap';
 import trash from './delete.png';
 import inhouse from './InHouse.png';
 
-const Table = (props) => (
-    <tr>
-      <td>{props.table.name}</td>
-      <td>{props.table.party_id}</td>
-      <td>{props.table.waiter_id}</td>
-      <td>{props.table.size}</td>
-      <td>{props.table.status}</td>
-      <td>
-        <a
-          href="/tables"
-          onClick={() => {
-            props.deleteTable(props.table._id);
-          }}
-        >
-          <img className="trash" alt="Delete" src={trash}></img>
-        </a>
-      </td>
-    </tr>
-  );
-
 export default class Tables extends Component {
     constructor(props) {
       super(props);
-      this.state = { tables: [] };
+      this.state = { tables: [], parties: [], tableState: {sampleId: ""} };
     }
 
-    componentDidMount() {
+    componentWillMount() {
       axios
         .get("http://localhost:5000/table/")
         .then((response) => {
           console.log(response.data);
-          this.setState({ tables: response.data });
+          axios
+            .get("http://localhost:5000/party")
+            .then((response2) => {
+              console.log(response2.data);
+              this.setState({ tables: response.data, parties: response2.data });
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
         })
         .catch(function (error) {
           console.log(error);
         });
+      
+        
     }
 
     deleteTable(id) {
@@ -52,15 +42,91 @@ export default class Tables extends Component {
       });
     }
 
+    partyList() {
+      return this.state.parties.map((currentparty) => {
+        return (
+          <option value={currentparty._id}>
+            {currentparty.name} ({currentparty.phone})
+          </option>
+        )
+      })
+    }
+
+    getParty(partyid) {
+      let name = "";
+      let phone = "";
+      for (let i = 0; i < this.state.parties.length; i++) {
+        if (this.state.parties[i]._id === partyid) {
+          name = this.state.parties[i].name;
+          phone = this.state.parties[i].phone;
+        }
+      }
+
+      return name + " (" + phone + ")";
+    }
+
+    startUpdate(tableid) {
+      let newTableState = this.state.tableState;
+      newTableState[tableid] = this.state.parties[0]._id;
+      this.setState({ tableState: newTableState });
+    }
+
+    updateTableState(tableid, partyid) {
+      let newState = this.state.tableState;
+      newState[tableid] = partyid;
+      this.setState({ tableState: newState });
+
+      console.log(this.state);
+    }
+
+    saveTableState(table) {
+      let newTable = table;
+      table.party_id = this.state.tableState[table._id]
+      axios
+        .put("http://localhost:5000/table/update/", newTable)
+        .then((res) => {
+          console.log(res.data);
+          let newState = this.state.tableState;
+          delete newState[table._id];
+          this.setState({ tableState: newState });
+        })
+    }
+
     tableList() {
       return this.state.tables.map((currenttable) => {
         return (
-          <Table
-            table={currenttable}
-            deleteTable={this.deleteTable}
-            key={currenttable._id}
-          />
-        );
+          <tr>
+            <td>{currenttable.name}</td>
+            <td>
+              {currenttable._id in this.state.tableState ? (
+                <select id={"partySelect_" + currenttable._id} onChange={({ target: { value } }) => this.updateTableState(currenttable._id, value)}>
+                  {this.partyList()}
+                </select>
+              ) : this.getParty(currenttable.party_id)}
+            </td>
+            <td>{currenttable.waiter_id}</td>
+            <td>{currenttable.size}</td>
+            <td>{currenttable.status}</td>
+            <td>
+              <a
+                href="/tables"
+                onClick={() => {
+                  this.deleteTable(currenttable._id);
+                }}
+              >
+                <img className="trash" alt="Delete" src={trash}></img>
+              </a>
+            </td>
+            <td>
+              {currenttable._id in this.state.tableState ? (
+                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.saveTableState(currenttable)}>Save</Button>
+              ) : (
+                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.startUpdate(currenttable._id)}>Change Party</Button>
+              )}
+              
+            </td>
+          </tr>
+        )
       });
     }
 
