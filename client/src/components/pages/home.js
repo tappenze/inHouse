@@ -19,14 +19,14 @@ export default class Home extends Component {
                     <Container>
                         <Row>
                             <Col>
-                                <Button variant="primary" size="lg">
+                                <a href="/reservations"><Button variant="primary" size="lg">
                                     Reservation
-                                </Button>
+                                </Button></a>
                             </Col>
                             <Col>
-                                <Button variant="primary" size="lg">
+                                <a href="/walkins"><Button variant="primary" size="lg">
                                     Walk-In
-                                </Button>
+                                </Button></a>
                             </Col>
                             <Col>
                                 <a href="/parties"><Button variant="primary" size="lg">

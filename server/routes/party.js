@@ -15,6 +15,28 @@ partyRoutes.route("/party").get(function (req, res) {
         });
 });
 
+partyRoutes.route("/reservations").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    db_connect
+        .collection("reservations")
+        .find({})
+        .toArray(function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
+partyRoutes.route("/walkins").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    db_connect
+        .collection("walkins")
+        .find({})
+        .toArray(function (err, result) {
+            if (err) throw err;
+            res.json(result);
+        });
+});
+
 partyRoutes.route("/party/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };

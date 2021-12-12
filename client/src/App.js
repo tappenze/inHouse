@@ -14,6 +14,8 @@ import Menu from "./components/pages/menus";
 import CreateMenu from "./components/pages/createMenu"
 import Waiters from "./components/pages/waiters";
 import CreateWaiter from "./components/pages/createWaiter";
+import Reservations from "./components/pages/reservations";
+import Walkins from "./components/pages/walkins";
 
 const App = () => {
   return (
@@ -51,7 +53,13 @@ const App = () => {
       </Route>  
       <Route exact path="/createWaiter">
         <CreateWaiter />
-      </Route>      
+      </Route>
+      <Route exact path="/reservations">
+        <Reservations />
+      </Route>
+      <Route exact path="/walkins">
+        <Walkins />
+      </Route>
     </div>
   );
 };
