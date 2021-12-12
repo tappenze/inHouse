@@ -4,6 +4,13 @@ const orderRoutes = express.Router();
 const dbo = require("../db/conn");
 const ObjectId = require("mongodb").ObjectId;
 
+// Data sanitization against NoSQL query injection
+const mongoSanitize = require('express-mongo-sanitize');
+const app = express();
+
+app.use(express.json());
+app.use(mongoSanitize()); 
+
 //gets all menu items
 orderRoutes.route("/menu").get(function (req, res) {
     let db_connect = dbo.getDb();
