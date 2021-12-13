@@ -29,7 +29,22 @@ export default class Tables extends Component {
                   for (let i = 0; i < response3.data.length; i++) {
                     waiterDict[response3.data[i]._id] = response3.data[i].name;
                   }
-                  this.setState({ tables: response.data, parties: response2.data, waiters: waiterDict });
+
+                  let temptables = response.data;
+                  let totals = [];
+                  axios.get("http://localhost:5000/tabletotals/").then((response) => {
+                    totals = response.data;
+                    for (let i = 0; i < temptables.length; i++) {
+                      for (let j = 0; j < totals.length; j++) {
+                        if (totals[j]._id == temptables[i]._id) {
+                          temptables[i].total = totals[j].total
+                        }
+                      }
+                    }
+                    this.setState({ tables: temptables });
+                  })
+
+                  this.setState({ tables: temptables, parties: response2.data, waiters: waiterDict });
                 })
             })
             .catch(function (error) {
@@ -118,6 +133,7 @@ export default class Tables extends Component {
             <td>{this.state.waiters[currenttable.waiter_id]}</td>
             <td>{currenttable.size}</td>
             <td>{currenttable.status}</td>
+            <td>{currenttable.total}</td>
             <td>
               <a
                 href="/tables"
@@ -157,6 +173,7 @@ export default class Tables extends Component {
                     <th>Waiter</th>
                     <th>Size</th>
                     <th>Status</th>
+                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>{this.tableList()}</tbody>
