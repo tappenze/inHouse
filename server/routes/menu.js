@@ -72,6 +72,24 @@ menuRoutes.route("/menu/:id").delete((req, res) => {
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("menu").deleteOne(myquery, function(err, result) {
         if (err) throw err;
+
+        db_connect.collection("orders")
+            .find({}, { _id: 1, items: 1 })
+            .toArray(function(err, result) {
+                if (err) throw err;
+
+                result.map((order) => {
+                    const newItems = order.items.filter(order => order._id != req.params.id)
+                    if (newItems.length < order.items.length) {
+                        db_connect.collection("orders").updateOne(
+                            { _id: order._id }, { $set: { items: newItems } }
+                        )
+                    }
+                })
+
+                
+
+            })
         res.status(result);
     })
 });
