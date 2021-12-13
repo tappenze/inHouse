@@ -10,7 +10,6 @@ const Party = (props) => (
       <td>{props.party.name}</td>
       <td>{props.party.phone}</td>
       <td>{props.party.size}</td>
-      <td>{props.party.total}</td>
       <td>
         <a
           href="/"
@@ -79,7 +78,6 @@ export default class Parties extends Component {
                     <th>Name</th>
                     <th>Phone Number</th>
                     <th>Size</th>
-                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>{this.partyList()}</tbody>

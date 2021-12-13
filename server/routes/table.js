@@ -26,6 +26,39 @@ tableRoutes.route("/table/occupied").get(function (req, res) {
         });
 });
 
+tableRoutes.route("/tabletotals/").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = [
+    { "$addFields": { "stringid": { "$toString": "$_id" }}},
+    {$lookup: {from: "orders", localField: "stringid", foreignField: "table_id", as: "eachorder"}}, 
+    {$unwind: "$eachorder"}, 
+    {$unwind: "$eachorder.items"},
+    { "$addFields": { "itemObject": { "$toObjectId": "$eachorder.items" }}},
+    {$lookup: {from: "menu", localField: "itemObject", foreignField: "_id", as: "eachitem"}}, 
+    {$unwind: "$eachitem"}, 
+    {$group: {_id: "$_id", total: {$sum: "$eachitem.price"}}},
+    ];
+    console.log("here we go")
+    db_connect.collection("tables").aggregate(myquery).toArray(function(err, docs) {
+        if (err) {
+            console.log("an error")
+            assert.equal(null);
+        }
+        else {
+            console.log(docs);
+            res.json(docs);
+        } 
+    });
+    // console.log(results)
+    // res.json(results)
+    // db_connect
+    //     .collection("tables")
+    //     .findOne(myquery, function (err, result) {
+    //         if (err) throw err;
+    //         res.json(result);
+    //     });
+});
+
 tableRoutes.route("/table/:id").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };

@@ -11,6 +11,7 @@ const Table = (props) => (
       <td>{props.table.waiter_id}</td>
       <td>{props.table.size}</td>
       <td>{props.table.status}</td>
+      <td>{props.table.total}</td>
       <td>
         <a
           href="/tables"
@@ -35,7 +36,21 @@ export default class Tables extends Component {
         .get("http://localhost:5000/table/")
         .then((response) => {
           console.log(response.data);
-          this.setState({ tables: response.data });
+          let temptables = response.data;
+          let totals = [];
+          axios.get("http://localhost:5000/tabletotals/").then((response) => {
+            totals = response.data;
+            for (let i = 0; i < temptables.length; i++) {
+              for (let j = 0; j < totals.length; j++) {
+                if (totals[j]._id == temptables[i]._id) {
+                  temptables[i].total = totals[j].total
+                }
+              }
+            }
+            this.setState({ tables: temptables });
+          })
+           
+          
         })
         .catch(function (error) {
           console.log(error);
@@ -52,12 +67,19 @@ export default class Tables extends Component {
       });
     }
 
+    calculateTotal(id) {
+      //aggregate orders with the table id that corresponds to id, and sum the total value
+      // of each item's value from the menu
+      
+    }
+
     tableList() {
       return this.state.tables.map((currenttable) => {
         return (
           <Table
             table={currenttable}
             deleteTable={this.deleteTable}
+            calculateTotal={this.calculateTotal}
             key={currenttable._id}
           />
         );
@@ -80,6 +102,7 @@ export default class Tables extends Component {
                     <th>Waiter</th>
                     <th>Size</th>
                     <th>Status</th>
+                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>{this.tableList()}</tbody>

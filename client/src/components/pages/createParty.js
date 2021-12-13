@@ -59,7 +59,6 @@ export default class CreateParty extends Component {
       name: this.state.name,
       phone: this.state.phone,
       size: parseInt(this.state.size),
-      total: 0,
       type: this.state.type,
       time: new Date(parseInt(this.state.time)),
     };

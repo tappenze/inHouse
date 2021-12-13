@@ -54,7 +54,6 @@ partyRoutes.route("/party").post(function (req, response) {
         name: req.body.name,
         phone: req.body.phone,
         size: req.body.size,
-        total: req.body.total,
     };
     console.log("Entering document:")
     console.log(myobj)
@@ -92,7 +91,6 @@ partyRoutes.route("/party/update").post(function (req, response) {
             name: req.body.name,
             phone: req.body.phone,
             size: req.body.size,
-            total: req.body.total
         },
     };
     db_connect
