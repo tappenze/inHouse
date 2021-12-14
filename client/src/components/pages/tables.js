@@ -7,7 +7,7 @@ import inhouse from './InHouse.png';
 export default class Tables extends Component {
     constructor(props) {
       super(props);
-      this.state = { tables: [], parties: [], tableState: {} };
+      this.state = { tables: [], parties: [], tableState: {}, totalSales: 0 };
     }
 
     componentWillMount() {
@@ -41,7 +41,14 @@ export default class Tables extends Component {
                         }
                       }
                     }
-                    this.setState({ tables: temptables });
+                    let tempTotalSales = 0
+                    axios.get("http://localhost:5000/totalSales").then((response) => {
+                      console.log("total sales are")
+                      console.log(response.data[0].total)
+                      tempTotalSales = response.data[0].total
+                      this.setState({ tables: temptables, totalSales: tempTotalSales });
+                    })
+                    
                   })
 
                   this.setState({ tables: temptables, parties: response2.data, waiters: waiterDict });
@@ -188,6 +195,9 @@ export default class Tables extends Component {
                 </thead>
                 <tbody>{this.tableList()}</tbody>
               </table>
+              <br></br>
+              <h2>Total Sales:</h2>
+              {this.state.totalSales}
               <br></br>
               <a href="/createTables">
                 <Button variant="primary" size="lg">
