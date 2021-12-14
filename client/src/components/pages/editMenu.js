@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { useLocation } from "react-router"
 import axios from 'axios';
 import inhouse from './InHouse.png';
  
@@ -12,8 +11,8 @@ export default class EditMenu extends Component {
     this.onSubmit = this.onSubmit.bind(this);
  
     this.state = {
-      name: "",
-      price: ""
+      name: props.location.state.name,
+      price: props.location.state.price
     };
     
     console.log(props.location.state)
@@ -34,19 +33,25 @@ export default class EditMenu extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const new_menu_item = {
+    const updated_menu_item = {
       name: this.state.name,
       price: parseFloat(this.state.price)
     };
+
+    console.log(this.props.location.state._id)
+    console.log(this.props.location.state.name)
+    console.log(this.props.location.state.price)
+    console.log(updated_menu_item.name)
+    console.log(updated_menu_item.price)
  
     axios
-      .post("http://localhost:5000/menu", new_menu_item)
+      .put("http://localhost:5000/menu/" + this.props.location.state._id, updated_menu_item)
       .then((res) => console.log(res.data));
       console.log("axios menu item")
 
     this.setState({
-      name: "",
-      price: ""
+      name: updated_menu_item.name,
+      price: updated_menu_item.price
     });
   }
 
@@ -66,7 +71,7 @@ export default class EditMenu extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.state.name}
+                  placeholder={this.props.location.state.name}
                   onChange={this.onChangeName}
                 />
               </div>
@@ -75,7 +80,7 @@ export default class EditMenu extends Component {
                 <input
                   type="text"
                   className="form-control"
-                  value={this.state.price}
+                  placeholder={this.props.location.state.price}
                   onChange={this.onChangePrice}
                 />
               </div>
