@@ -10,7 +10,8 @@ const Waiter = (props) => (
       <td>{props.waiter._id}</td>
       <td>{props.waiter.name}</td>
       <td>{props.waiter.tips}</td>
-      <td>{props.waiter.expectedtips}</td>
+      <td>{props.waiter.expectedtips ? props.waiter.expectedtips : 0}</td>
+      <td>{props.waiter.numtables ? props.waiter.numtables : 0}</td>
       <td>
       <Link to={{
         pathname: "/editWaiter",
@@ -59,7 +60,19 @@ export default class Waiters extends Component {
                         }
                       }
                     }
-                    this.setState({ waiters: tempwaiters });
+
+                    axios.get("http://localhost:5000/waiters/tables").then((response2) => {
+                      let tablecounts = response2.data;
+                      for (let i = 0; i < tempwaiters.length; i++) {
+                        for (let j = 0; j < tablecounts.length; j++) {
+                          if (tablecounts[j]._id == tempwaiters[i]._id) {
+                            tempwaiters[i].numtables = tablecounts[j].count
+                          }
+                        }
+                      }
+
+                      this.setState({ waiters: tempwaiters });
+                    })
                   })
         })
         .catch(function (error) {
@@ -107,6 +120,7 @@ export default class Waiters extends Component {
                     <th>Name</th>
                     <th>Total Tips</th>
                     <th>Expected tip amount</th>
+                    <th>Number of Tables</th>
                   </tr>
                 </thead>
                 <tbody>{this.waiterList()}</tbody>

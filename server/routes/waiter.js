@@ -23,6 +23,21 @@ waiterRoutes.route("/waiters").get(function (req, res) {
         });
 });
 
+waiterRoutes.route("/waiters/tables").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = [
+        { "$addFields": { "stringid": { "$toString": "$_id" }}},
+        {$lookup: {from: "tables", localField: "stringid", foreignField: "waiter_id", as: "table"}},
+        {$unwind: "$table"},
+        {$group: {_id: "$_id", count: {$sum: 1}}}
+    ]
+
+    db_connect.collection("waiters").aggregate(myquery).toArray(function(err, docs) {
+        if (err) throw err;
+        res.json(docs);
+    })
+})
+
 waiterRoutes.route("/waiters/expectedtips").get(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = [
