@@ -114,14 +114,14 @@ export default class CreateTable extends Component {
                   value="Create table"
                   className="btn btn-primary"
                 />
-              </div>
               <Link to={{
                 pathname: "/tables"
                 }}>
-                <Button variant="secondary" size="sm">
+                <Button variant="secondary" size="md">
                   Go back
                 </Button>
-              </Link>                
+              </Link>                 
+              </div>               
             </form>
           </div>
         </div>

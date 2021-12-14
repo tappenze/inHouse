@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
@@ -20,7 +20,7 @@ const Waiter = (props) => (
       </Button>
       </Link>
         <a
-          href="/"
+          href="/waiters"
           onClick={() => {
             props.deleteWaiter(props.waiter._id);
           }}

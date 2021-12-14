@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import inhouse from './InHouse.png';
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
  
 // for a given party, they should be able to place an order for foods from among the listed menu
 
@@ -135,6 +137,13 @@ export default class CreateOrder extends Component {
                 value="Submit order"
                 className="btn btn-primary"
               />
+              <Link to={{
+                pathname: "/orders"
+                }}>
+                <Button variant="secondary" size="md">
+                  Go back
+                </Button>
+              </Link>                
             </div>
           </form>
         </div>

@@ -20,7 +20,7 @@ const Menu = (props) => (
           </Button>
         </Link>
         <a
-          href="/"
+          href="/menu"
           onClick={() => {
             props.deleteMenu(props.menu._id);
           }}
