@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import inhouse from './InHouse.png';
  
 export default class CreateTable extends Component {
@@ -113,6 +115,13 @@ export default class CreateTable extends Component {
                   className="btn btn-primary"
                 />
               </div>
+              <Link to={{
+                pathname: "/tables"
+                }}>
+                <Button variant="secondary" size="sm">
+                  Go back
+                </Button>
+              </Link>                
             </form>
           </div>
         </div>
