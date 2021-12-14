@@ -13,6 +13,7 @@ module.exports = {
     client.connect(function (err, db) {
       if (db)
       {
+        _connection = db;
         _db = db.db("InHouse");
         console.log("Successfully connected to MongoDB."); 
       }
@@ -23,4 +24,8 @@ module.exports = {
   getDb: function () {
     return _db;
   },
+
+  getConnection: function() {
+    return _connection;
+  }
 };
