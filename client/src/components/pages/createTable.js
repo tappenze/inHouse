@@ -9,14 +9,12 @@ export default class CreateTable extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeWaiter = this.onChangeWaiter.bind(this);
     this.onChangeSize = this.onChangeSize.bind(this);
-    this.onChangeStatus = this.onChangeStatus.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
  
     this.state = {
       name: "",
       waiter_id: "",
       size: "",
-      status: "",
       waiters: []
     };
   }
@@ -25,7 +23,7 @@ export default class CreateTable extends Component {
     axios
       .get("http://localhost:5000/waiters/")
       .then((res) => {
-        this.setState({ waiters: res.data })
+        this.setState({ waiters: res.data, waiter_id: res.data[0]._id })
       })
   }
 
@@ -47,12 +45,6 @@ export default class CreateTable extends Component {
     });
   }
 
-  onChangeStatus(e) {
-    this.setState({
-      status: e.target.value,
-    });
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
@@ -60,7 +52,7 @@ export default class CreateTable extends Component {
       name: this.state.name,
       waiter_id: this.state.waiter_id,
       size: parseInt(this.state.size),
-      status: this.state.status
+      status: "Open"
     };
     console.log(this.state.status)
  
@@ -72,8 +64,7 @@ export default class CreateTable extends Component {
       name: "",
       party_id: "",
       table_id: "",
-      size: "",
-      status: ""
+      size: ""
     });
   }
 
@@ -113,32 +104,6 @@ export default class CreateTable extends Component {
                   value={this.state.size}
                   onChange={this.onChangeSize}
                 />
-              </div>
-              <div className="form-group">
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="priorityOptions"
-                    id="priorityLow"
-                    value="Open"
-                    checked={this.state.status === "Open"}
-                    onChange={this.onChangeStatus}
-                  />
-                  <label className="form-check-label">Open</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="radio"
-                    name="priorityOptions"
-                    id="priorityMedium"
-                    value="Occupied"
-                    checked={this.state.status === "Occupied"}
-                    onChange={this.onChangeStatus}
-                  />
-                  <label className="form-check-label">Occupied</label>
-                </div>
               </div>
               <br></br>
               <div className="form-group">
