@@ -51,9 +51,10 @@ export default class Waiters extends Component {
           let totals = [];
                   axios.get("http://localhost:5000/waiters/expectedtips").then((response) => {
                     totals = response.data;
+                    console.log(totals)
                     for (let i = 0; i < tempwaiters.length; i++) {
                       for (let j = 0; j < totals.length; j++) {
-                        if (totals[j].waiter == tempwaiters[i]._id) {
+                        if (totals[j]._id == tempwaiters[i]._id) {
                           tempwaiters[i].expectedtips = totals[j].total*.2
                         }
                       }

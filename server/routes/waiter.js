@@ -35,7 +35,8 @@ waiterRoutes.route("/waiters/expectedtips").get(function (req, res) {
     {$unwind: "$eachitem"}, 
     { "$addFields": { "waiterObject": { "$toObjectId": "$waiter_id" }}},
     {$lookup: {from: "waiters", localField: "waiterObject", foreignField: "_id", as: "waiter"}},
-    {$group: {_id: "$waiter", total: {$sum: "$eachitem.price"}}},
+    {$unwind: "$waiter"}, 
+    {$group: {_id: "$waiter._id", total: {$sum: "$eachitem.price"}}},
     ];
     console.log("here we go")
     db_connect.collection("tables").aggregate(myquery).toArray(function(err, docs) {
