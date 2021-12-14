@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import inhouse from './InHouse.png';
  
@@ -85,6 +87,13 @@ export default class CreateWaiter extends Component {
                   className="btn btn-primary"
                 />
               </div>
+              <Link to={{
+                pathname: "/waiters"
+                }}>
+                <Button variant="secondary" size="sm">
+                  Go back
+                </Button>
+              </Link>              
             </form>
           </div>
         </div>
