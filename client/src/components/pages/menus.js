@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import trash from './delete.png';
@@ -18,6 +19,14 @@ const Menu = (props) => (
         >
           <img className="trash" alt="Delete" src={trash}></img>
         </a>
+      </td>
+      <td>
+        <Link to={{pathname: "/editMenu",
+          state: {_id: props.menu._id, name: props.menu.name, price: props.menu.price}}}>
+          <Button variant="primary" size="sm">
+              Update
+          </Button>
+        </Link>
       </td>
     </tr>
   );

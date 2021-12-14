@@ -16,6 +16,7 @@ import Waiters from "./components/pages/waiters";
 import CreateWaiter from "./components/pages/createWaiter";
 import Reservations from "./components/pages/reservations";
 import Walkins from "./components/pages/walkins";
+import EditMenu from "./components/pages/editMenu";
 
 const App = () => {
   return (
@@ -59,6 +60,9 @@ const App = () => {
       </Route>
       <Route exact path="/walkins">
         <Walkins />
+      </Route>
+      <Route exact path="/editMenu">
+        <EditMenu />
       </Route>
     </div>
   );
