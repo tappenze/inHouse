@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import trash from './delete.png';
@@ -10,6 +11,14 @@ const Waiter = (props) => (
       <td>{props.waiter.name}</td>
       <td>{props.waiter.tips}</td>
       <td>
+      <Link to={{
+        pathname: "/editWaiter",
+        state: {_id: props.waiter._id, name: props.waiter.name, tips: props.waiter.tips}
+      }}>
+      <Button variant="secondary" size="sm">
+          Update
+      </Button>
+      </Link>
         <a
           href="/"
           onClick={() => {
@@ -28,6 +37,10 @@ export default class Waiters extends Component {
       this.state = { waiters: [] };
     }
 
+    onSubmit = () => {
+      console.log(this.state.val)
+    };
+
     componentDidMount() {
       axios
         .get("http://localhost:5000/waiters/")
@@ -43,12 +56,15 @@ export default class Waiters extends Component {
     deleteWaiter(id) {
       axios.delete("http://localhost:5000/waiters/" + id).then((response) => {
         console.log(response.data);
+        console.log("fired");
       });
   
       this.setState({
         waiters: this.state.waiters.filter((el) => el._id !== id),
       });
+ 
     }
+ 
 
     waiterList() {
       return this.state.waiters.map((currentwaiter) => {
@@ -75,7 +91,7 @@ export default class Waiters extends Component {
                   <tr>
                     <th>Waiter ID</th>
                     <th>Name</th>
-                    <th>Tips</th>
+                    <th>Total Tips</th>
                   </tr>
                 </thead>
                 <tbody>{this.waiterList()}</tbody>
