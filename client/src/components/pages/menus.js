@@ -11,6 +11,14 @@ const Menu = (props) => (
       <td>{props.menu.name}</td>
       <td>{props.menu.price}</td>
       <td>
+        <Link to={{
+          pathname: "/editMenu",
+          state: {_id: props.menu._id, name: props.menu.name, price: props.menu.price}}
+        }>
+          <Button variant="primary" size="sm">
+            Update
+          </Button>
+        </Link>
         <a
           href="/"
           onClick={() => {
@@ -19,17 +27,6 @@ const Menu = (props) => (
         >
           <img className="trash" alt="Delete" src={trash}></img>
         </a>
-      </td>
-      <td>
-        <Link to={{
-          pathname: "/editMenu",
-          state: {_id: props.menu._id, name: props.menu.name, price: props.menu.price}}
-        }>
-          Update
-          {/*<Button variant="primary" size="sm">
-              Update
-        </Button>*/}
-        </Link>
       </td>
     </tr>
   );
