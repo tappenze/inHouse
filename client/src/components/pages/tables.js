@@ -7,7 +7,7 @@ import inhouse from './InHouse.png';
 export default class Tables extends Component {
     constructor(props) {
       super(props);
-      this.state = { tables: [], parties: [], tableState: {sampleId: ""} };
+      this.state = { tables: [], parties: [], tableState: {} };
     }
 
     componentWillMount() {
@@ -79,8 +79,11 @@ export default class Tables extends Component {
     }
 
     getParty(partyid) {
+      if (!partyid || partyid === "") return "No party assigned";
+
       let name = "";
       let phone = "";
+
       for (let i = 0; i < this.state.parties.length; i++) {
         if (this.state.parties[i]._id === partyid) {
           name = this.state.parties[i].name;
@@ -93,7 +96,7 @@ export default class Tables extends Component {
 
     startUpdate(tableid) {
       let newTableState = this.state.tableState;
-      newTableState[tableid] = this.state.parties[0]._id;
+      newTableState[tableid] = "";
       this.setState({ tableState: newTableState });
     }
 
@@ -107,7 +110,13 @@ export default class Tables extends Component {
 
     saveTableState(table) {
       let newTable = table;
-      table.party_id = this.state.tableState[table._id]
+      newTable.party_id = this.state.tableState[table._id];
+      if (newTable.party_id != "") {
+        newTable.status = "Occupied";
+      } else {
+        newTable.status = "Open";
+      }
+
       axios
         .put("http://localhost:5000/table/update/", newTable)
         .then((res) => {
@@ -126,6 +135,7 @@ export default class Tables extends Component {
             <td>
               {currenttable._id in this.state.tableState ? (
                 <select id={"partySelect_" + currenttable._id} onChange={({ target: { value } }) => this.updateTableState(currenttable._id, value)}>
+                  <option value="">No party</option>
                   {this.partyList()}
                 </select>
               ) : this.getParty(currenttable.party_id)}
