@@ -68,15 +68,28 @@ menuRoutes.route("/menu/:id").put(function (req, res) {
 
 //delete a menu item
 menuRoutes.route("/menu/:id").delete((req, res) => {
+    let db_session = dbo.getConnection();
     let db_connect = dbo.getDb();
+
+    db_transaction = db_session.startSession();
+    db_transaction.startTransaction();
+
     let myquery = { _id: ObjectId(req.params.id) };
     db_connect.collection("menu").deleteOne(myquery, function(err, result) {
-        if (err) throw err;
+        if (err) {
+            db_transaction.abortTransaction();
+            db_transaction.endSession();
+            throw err;
+        }
 
         db_connect.collection("orders")
             .find({}, { _id: 1, items: 1 })
             .toArray(function(err, result) {
-                if (err) throw err;
+                if (err) {
+                    db_transaction.abortTransaction();
+                    db_transaction.endSession();
+                    throw err;
+                }
 
                 result.map((order) => {
                     const newItems = order.items.filter(order => order._id != req.params.id)
@@ -86,10 +99,10 @@ menuRoutes.route("/menu/:id").delete((req, res) => {
                         )
                     }
                 })
-
-                
-
             })
+
+        db_transaction.commitTransaction();
+        db_transaction.endSession();
         res.status(result);
     })
 });
