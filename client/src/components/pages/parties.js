@@ -12,7 +12,7 @@ const Party = (props) => (
       <td>{props.party.size}</td>
       <td>
         <a
-          href="/"
+          href="/parties"
           onClick={() => {
             props.deleteParty(props.party._id);
           }}

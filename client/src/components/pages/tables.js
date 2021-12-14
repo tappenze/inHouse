@@ -7,7 +7,7 @@ import inhouse from './InHouse.png';
 export default class Tables extends Component {
     constructor(props) {
       super(props);
-      this.state = { tables: [], parties: [], tableState: {} };
+      this.state = { tables: [], parties: [], tableState: {}, totalSales: 0 };
     }
 
     componentWillMount() {
@@ -41,7 +41,14 @@ export default class Tables extends Component {
                         }
                       }
                     }
-                    this.setState({ tables: temptables });
+                    let tempTotalSales = 0
+                    axios.get("http://localhost:5000/totalSales").then((response) => {
+                      console.log("total sales are")
+                      console.log(response.data[0].total)
+                      tempTotalSales = response.data[0].total
+                      this.setState({ tables: temptables, totalSales: tempTotalSales });
+                    })
+                    
                   })
 
                   this.setState({ tables: temptables, parties: response2.data, waiters: waiterDict });
@@ -145,6 +152,11 @@ export default class Tables extends Component {
             <td>{currenttable.status}</td>
             <td>{currenttable.total ? currenttable.total : 0}</td>
             <td>
+              {currenttable._id in this.state.tableState ? (
+                <Button style={{ fontSize: 14, margin: 20 }} onClick={() => this.saveTableState(currenttable)}>Save</Button>
+              ) : (
+                <Button style={{ fontSize: 14, margin: 20 }} onClick={() => this.startUpdate(currenttable._id)}>Change Party</Button>
+              )}
               <a
                 href="/tables"
                 onClick={() => {
@@ -153,14 +165,6 @@ export default class Tables extends Component {
               >
                 <img className="trash" alt="Delete" src={trash}></img>
               </a>
-            </td>
-            <td>
-              {currenttable._id in this.state.tableState ? (
-                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.saveTableState(currenttable)}>Save</Button>
-              ) : (
-                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.startUpdate(currenttable._id)}>Change Party</Button>
-              )}
-              
             </td>
           </tr>
         )
@@ -188,6 +192,9 @@ export default class Tables extends Component {
                 </thead>
                 <tbody>{this.tableList()}</tbody>
               </table>
+              <br></br>
+              <h2>Total Sales:</h2>
+              {this.state.totalSales}
               <br></br>
               <a href="/createTables">
                 <Button variant="primary" size="lg">

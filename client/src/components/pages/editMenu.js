@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import inhouse from './InHouse.png';
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
  
 export default class EditMenu extends Component {  
   constructor(props) {
@@ -91,6 +93,13 @@ export default class EditMenu extends Component {
                   value="Update menu item"
                   className="btn btn-primary"
                 />
+                  <Link to={{
+                    pathname: "/menu"
+                    }}>
+                    <Button variant="secondary" size="md">
+                      Go back
+                    </Button>
+                  </Link>                
               </div>
             </form>
           </div>

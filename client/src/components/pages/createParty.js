@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import inhouse from './InHouse.png';
+import { Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
  
 export default class CreateParty extends Component {
   constructor(props) {
@@ -158,6 +160,13 @@ export default class CreateParty extends Component {
                   value="Create party"
                   className="btn btn-primary"
                 />
+              <Link to={{
+                pathname: "/parties"
+                }}>
+                <Button variant="secondary" size="md">
+                  Go back
+                </Button>
+              </Link>                 
               </div>
             </form>
           </div>
