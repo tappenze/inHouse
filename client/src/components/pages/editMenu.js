@@ -16,7 +16,6 @@ export default class EditMenu extends Component {
       price: ""
     };
     
-    console.log(props)
     console.log(props.location.state)
   }
 

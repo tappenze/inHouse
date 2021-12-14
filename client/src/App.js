@@ -61,9 +61,7 @@ const App = () => {
       <Route exact path="/walkins">
         <Walkins />
       </Route>
-      <Route exact path="/editMenu">
-        <EditMenu />
-      </Route>
+      <Route exact path="/editMenu" component={EditMenu} />
     </div>
   );
 };
