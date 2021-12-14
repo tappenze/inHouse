@@ -86,14 +86,14 @@ export default class CreateWaiter extends Component {
                   value="Create waiter"
                   className="btn btn-primary"
                 />
-              </div>
               <Link to={{
                 pathname: "/waiters"
                 }}>
-                <Button variant="secondary" size="sm">
+                <Button variant="secondary" size="md">
                   Go back
                 </Button>
-              </Link>              
+              </Link>                 
+              </div>             
             </form>
           </div>
         </div>
