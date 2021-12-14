@@ -143,7 +143,7 @@ export default class Tables extends Component {
             <td>{this.state.waiters[currenttable.waiter_id]}</td>
             <td>{currenttable.size}</td>
             <td>{currenttable.status}</td>
-            <td>{currenttable.total}</td>
+            <td>{currenttable.total ? currenttable.total : 0}</td>
             <td>
               <a
                 href="/tables"
