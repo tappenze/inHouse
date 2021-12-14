@@ -121,10 +121,12 @@ export default class CreateOrder extends Component {
           <form onSubmit={this.onSubmit}>
             <div className="form-group">
               <label>Select an occupied table: </label>
+              <br></br>
               <select onChange={this.onChangeTable}> 
                 {tablesList}
               </select>
             </div>
+            <br></br>
             <div className="App" style={{display: "inline-block", textAlign: "left"}}>
               Select your menu items:
               {menuitems}

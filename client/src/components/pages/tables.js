@@ -145,6 +145,11 @@ export default class Tables extends Component {
             <td>{currenttable.status}</td>
             <td>{currenttable.total ? currenttable.total : 0}</td>
             <td>
+              {currenttable._id in this.state.tableState ? (
+                <Button style={{ fontSize: 14, margin: 20 }} onClick={() => this.saveTableState(currenttable)}>Save</Button>
+              ) : (
+                <Button style={{ fontSize: 14, margin: 20 }} onClick={() => this.startUpdate(currenttable._id)}>Change Party</Button>
+              )}
               <a
                 href="/tables"
                 onClick={() => {
@@ -153,14 +158,6 @@ export default class Tables extends Component {
               >
                 <img className="trash" alt="Delete" src={trash}></img>
               </a>
-            </td>
-            <td>
-              {currenttable._id in this.state.tableState ? (
-                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.saveTableState(currenttable)}>Save</Button>
-              ) : (
-                <Button style={{ fontSize: 10, margin: 0 }} onClick={() => this.startUpdate(currenttable._id)}>Change Party</Button>
-              )}
-              
             </td>
           </tr>
         )
