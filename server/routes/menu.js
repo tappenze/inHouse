@@ -51,7 +51,7 @@ menuRoutes.route("/menu").post(function (req, res) {
 });
 
 //edit a menu item
-menuRoutes.route("/menu/:id").post(function (req, res) {
+menuRoutes.route("/menu/:id").put(function (req, res) {
     let db_connect = dbo.getDb();
     let myquery = { _id: ObjectId(req.params.id) };
     let newvalues = {
