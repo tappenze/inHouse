@@ -49,20 +49,20 @@ waiterRoutes.route("/waiters/:id").delete((req, res) => {
     });
 });
 
-//update waiter's info (tips + arrays)
-waiterRoutes.route("/waiters").post(function(req, resp) {
+//update waiter's info (tips)
+waiterRoutes.route("/waiters/:id").put(function(req, resp) {
     let db_connect = dbo.getDb();
-    let myquery = { _id: ObjectId(req.params.id)};
+    let waiterID = { _id: ObjectId(req.params.id)};
     let newvalues = {
         $set: {
             name: req.body.name,
-            tips: 0.0,
+            tips: req.body.tips,
         },
     };
-    db_connect.collection("waiters").updateOne(myquery, newvalues, function(err, res) {
+    db_connect.collection("waiters").updateOne(waiterID, newvalues, function(err, res) {
         if (err) throw err;
         console.log("waiter information updated");
-        response.json(res);
+        resp.json(res);
     });
 });
 

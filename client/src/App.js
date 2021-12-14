@@ -16,6 +16,7 @@ import Waiters from "./components/pages/waiters";
 import CreateWaiter from "./components/pages/createWaiter";
 import Reservations from "./components/pages/reservations";
 import Walkins from "./components/pages/walkins";
+import EditWaiter from "./components/pages/editWaiter";
 
 const App = () => {
   return (
@@ -53,6 +54,8 @@ const App = () => {
       </Route>  
       <Route exact path="/createWaiter">
         <CreateWaiter />
+      </Route>
+      <Route exact path="/editWaiter" component={EditWaiter}>
       </Route>
       <Route exact path="/reservations">
         <Reservations />
