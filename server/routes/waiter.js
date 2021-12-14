@@ -23,6 +23,33 @@ waiterRoutes.route("/waiters").get(function (req, res) {
         });
 });
 
+waiterRoutes.route("/waiters/expectedtips").get(function (req, res) {
+    let db_connect = dbo.getDb();
+    let myquery = [
+    { "$addFields": { "stringid": { "$toString": "$_id" }}},
+    {$lookup: {from: "orders", localField: "stringid", foreignField: "table_id", as: "eachorder"}}, 
+    {$unwind: "$eachorder"}, 
+    {$unwind: "$eachorder.items"},
+    { "$addFields": { "itemObject": { "$toObjectId": "$eachorder.items" }}},
+    {$lookup: {from: "menu", localField: "itemObject", foreignField: "_id", as: "eachitem"}}, 
+    {$unwind: "$eachitem"}, 
+    { "$addFields": { "waiterObject": { "$toObjectId": "$waiter_id" }}},
+    {$lookup: {from: "waiters", localField: "waiterObject", foreignField: "_id", as: "waiter"}},
+    {$group: {_id: "$waiter", total: {$sum: "$eachitem.price"}}},
+    ];
+    console.log("here we go")
+    db_connect.collection("tables").aggregate(myquery).toArray(function(err, docs) {
+        if (err) {
+            console.log("an error")
+            assert.equal(null);
+        }
+        else {
+            console.log(docs);
+            res.json(docs);
+        } 
+    });
+});
+
 //create new waiter
 waiterRoutes.route("/waiters").post(function (req, response) {
     let db_connect = dbo.getDb();
